@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		.pixel {
+			border: 1px solid #eee;
+			border-right: none; /* FIXME: feels like a hack */
+			display: inline-block;
+			height: 10px;
+			width: 10px;
+		}
+
+		.row {
+			margin-top: -7px; /* Hack to fix the display-inline issue of top margin */
+		}
+
+		.active {
+			background-color: red;
+		}
+
+		#game_canvas {
+			float: left;
+			width: 780px;
+		}
+	</style>
+</head>
+<body>
+	<div id="game_canvas">Game failed to load</div>
+	<button class="btn-pause" style="margin-bottom: 30px;">Running</button>
+	<button class="btn-pause-one-cycle" style="margin-bottom: 30px;">Next cycle</button>
+	<div class="game_state">
+	<script src="pong.js"></script>
+	<script src="browser.js"></script>
+</body>
+</html>
