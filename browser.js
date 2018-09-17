@@ -550,8 +550,8 @@ var codes = {
     var hexCode = opcode.toString(16); // convert opcode to hex value
 
     // The interpreter increments the stack pointer, then puts the current PC on the top of the stack. The PC is then set to nnn.
+    state.stack[state.sp] = state.pc;
     state.sp++;
-    state.stack.push(state.pc);
     // vs state.stack[state.sp] = state.pc; ?!?
 
     state.pc = parseInt(hexCode.slice(1), 16); // FIXME: should this be base16? YES, because the source format is Base 16 (hex)
@@ -1135,16 +1135,19 @@ var codes = {
     // console.log('#########eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee####################')
 
     // console.log('state.stack', state.stack )
-    state.pc = state.stack[0]; // is it always top of the stack?
-    state.stack.pop(); // remove stack[0] // last part of the stack
+    // state.pc = state.stack[0]; // is it always top of the stack?
+    // state.stack.pop(); // remove stack[0] // last part of the stack
+
+    // state.sp--;
 
     state.sp--;
+    state.pc = state.stack[state.sp];
 
     // his way ?
     // state.pc = state.stack[--state.sp];
 
     state.pc += 2; // FIXME: verify that this is the case... I assume that if we leave this off we'll have infinite loops since this will return
-
+    //
     // to the same point and then run that exact same code again
     // state.loopCount = 300;
   },
@@ -1282,8 +1285,8 @@ function drawToScreen() {
 
 // brings in the buffer, and turns it into hex values?...
 // var rom = require('fs').readFileSync(process.argv[2]).toJSON() // Loads the room from the args supplied in the terminal
-var rom = emu.pongData;
-// var rom = emu.blinkyData;
+// var rom = emu.pongData;
+var rom = emu.blinkyData;
 // console.log('rom', rom)
 // console.log('rom', rom)
 chip8.init();
